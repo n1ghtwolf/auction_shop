@@ -7,10 +7,46 @@
 
 </head>
 <body>
-123
+<table>
+    <thead>
+    <tr>
+        <th>
+
+        </th>
+        <th>
+            Название
+        </th>
+        <th>
+            Описание
+        </th>
+        <th>
+            Категория
+        </th>
+    </tr>
+    </thead>
+    <tbody>
+    @foreach($lots as $lot)
+
+        <tr>
+            <td>
+
+            </td>
+            <td>
+                {{$lot->name}}
+            </td>
+            <td>
+                {{$lot->description}}
+            </td>
+            <td>
+                {{$lot->category->name}}
+            </td>
+        </tr>
+    @endforeach
+    </tbody>
+</table>
 </body>
 <script>
-    window.onload = function() {
+    window.onload = function () {
         if (window.jQuery) {
             // jQuery is loaded
             console.log("jQuery is loaded");
