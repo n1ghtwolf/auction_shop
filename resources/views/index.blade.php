@@ -14,9 +14,6 @@
     <thead>
     <tr>
         <th>
-
-        </th>
-        <th>
             Название
         </th>
         <th>
@@ -24,6 +21,9 @@
         </th>
         <th>
             Категория
+            <button class="btn btn-small" id='ManageCategories'
+                    onclick="showDialog('{{route('lots.manageCategories')}}')">Управление категориями
+            </button>
         </th>
         <th>
             <button id='newAuctionLot' onclick="showDialog('{{route('lots.newLot')}}')">добавить</button>
@@ -34,9 +34,6 @@
     @foreach($lots as $lot)
 
         <tr lot_id="{{$lot->id}}">
-            <td>
-
-            </td>
             <td>
                 {{$lot->name}}
             </td>

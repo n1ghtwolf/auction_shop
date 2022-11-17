@@ -7,7 +7,7 @@ use App\Models\Lots;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\Request;
 
-class auctionLotsController extends Controller
+class AuctionLotsController extends Controller
 {
     public function __construct()
     {
@@ -55,11 +55,13 @@ class auctionLotsController extends Controller
     public function create(Request $request): \Illuminate\Http\JsonResponse
     {
         $Lots = new Lots();
-        $Lots->name = $request->name;
-        $Lots->description = $request->description;
-        $Lots->category_id = $request->category_id;
-        $res = $Lots->save();
-        $Lots->save();
+        $res = $Lots::create(
+            [
+                'name' => $request->name,
+                'description' => $request->description,
+                'category_id' => $request->category_id
+            ]
+        );
         if ($res) {
             return response()->json([
                 'status' => 1,
@@ -76,12 +78,7 @@ class auctionLotsController extends Controller
 
     public function update(Request $request): \Illuminate\Http\JsonResponse
     {
-        $Lots = Lots::find($request->lot_id);
-        $Lots->name = $request->name;
-        $Lots->description = $request->description;
-        $Lots->category_id = $request->category_id;
-        $res = $Lots->save();
-
+        $res = Lots::where('id', $request->lot_id)->update($request->only('name', 'description', 'category_id'));
         if ($res) {
             return response()->json([
                 'status' => 1,

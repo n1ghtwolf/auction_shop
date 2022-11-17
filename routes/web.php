@@ -13,7 +13,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/lots', 'auctionLotsController@index')->name('auctions');
-Route::get('/', 'auctionLotsController@index')->name('auctions');
+Route::get('/lots', 'AuctionLotsController@index')->name('auctions');
+Route::get('/', 'AuctionLotsController@index')->name('auctions');
 
 include_once "lots/lots.router.php";
