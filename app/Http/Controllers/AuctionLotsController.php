@@ -52,28 +52,22 @@ class AuctionLotsController extends Controller
         return view('lots.addLot', ['categories' => Category::all()]);
     }
 
-    public function create(Request $request): \Illuminate\Http\JsonResponse
+    public function create(Request $request, Lots $lot): \Illuminate\Http\JsonResponse
     {
-        $Lots = new Lots();
-        $res = $Lots::create(
-            [
-                'name' => $request->name,
-                'description' => $request->description,
-                'category_id' => $request->category_id
-            ]
-        );
-        if ($res) {
+        $lot->fill($request->only('name', 'description', 'category_id'));
+
+        if ($lot->save()) {
             return response()->json([
                 'status' => 1,
                 'msg' => 'success',
-                'lot_id' => $Lots->id
-            ]);
-        } else {
-            return response()->json([
-                'status' => 0,
-                'msg' => 'fail'
+                'lot_id' => $lot->id
             ]);
         }
+
+        return response()->json([
+            'status' => 0,
+            'msg' => 'fail'
+        ]);
     }
 
     public function update(Request $request): \Illuminate\Http\JsonResponse

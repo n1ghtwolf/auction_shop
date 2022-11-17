@@ -39,7 +39,8 @@
 <div class="modal-footer">
     <button type="button" class="btn btn-danger" data-dismiss="modal" onclick="hideModal()">закрыть</button>
 </div>
-<script>function cancelChangeCategory() {
+<script>
+    function cancelChangeCategory() {
         $('[rel="changeCategory"]').hide();
         $('#changeCategoryButton').show();
         $('#changeCategoryInput').val('');
@@ -132,6 +133,7 @@
         $('#newCategoryButton').show();
         $('#newCategoryInput').val('');
         $('#category').append(new Option(name, id));
+        $('#category').val(id).change();
     }
 
     $('#ChangeCategoryForm').on('submit', function (event) {

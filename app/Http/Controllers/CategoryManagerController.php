@@ -15,12 +15,8 @@ class CategoryManagerController extends Controller
 
     public function create(Request $request): \Illuminate\Http\JsonResponse
     {
-        $res = Category::create(
-            [
-                'name' => $request->category_name,
-            ]
-        );
-//        var_dump($res);die;
+        $res = Category::create(['name' => $request->category_name]);
+
         if ($res) {
             return response()->json([
                 'status' => 1,
