@@ -12,6 +12,7 @@ class Lots extends Model
 
     protected $fillable = ['name', 'description', 'category_id'];
     protected $table = "auction_lots";
+    public $primarykey = "id";
 
     public function category(): HasOne
     {

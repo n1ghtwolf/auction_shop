@@ -12,6 +12,7 @@ class Category extends Model
 
     protected $fillable = ['name'];
     protected $table = "auction_category";
+    public $primarykey = "id";
 
     public function lots(): HasMany
     {
