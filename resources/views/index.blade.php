@@ -106,7 +106,7 @@
         if (type == 'addRow') {
             table.prepend('<tr lot_id="' + row_id + '"><td>' + name + '</td><td>' + description + '</td><td>' + category + '</td><tr>')
         }
-        $("[lot_id='" + row_id + "']").html('<td></td><td>' + name + '</td><td>' + description + '</td><td>' + category + '</td><td><button onclick="showDialog(\'{{route('lots.show')}}?id=' + row_id + '\')" >просмотреть</button><button onclick="showDialog(\'{{route('lots.change')}}?id=' + row_id + '\')" >изменить</button><button onclick="deleteRow(' + row_id + ')">удалить</td>');
+        $("[lot_id='" + row_id + "']").html('<td>' + name + '</td><td>' + description + '</td><td>' + category + '</td><td><button onclick="showDialog(\'{{route('lots.show')}}?id=' + row_id + '\')" >просмотреть</button><button onclick="showDialog(\'{{route('lots.change')}}?id=' + row_id + '\')" >изменить</button><button onclick="deleteRow(' + row_id + ')">удалить</td>');
     }
 
 </script>
