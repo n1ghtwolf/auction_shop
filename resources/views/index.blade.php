@@ -60,7 +60,7 @@
     function deleteRow(lot_id) {
 
         $("[lot_id='" + lot_id + "']").remove();
-        ajax_call("{{ route('lots.delete') }}", lot_id);
+        ajax_call("{{ route('lots.destroy') }}", lot_id);
 
     }
 

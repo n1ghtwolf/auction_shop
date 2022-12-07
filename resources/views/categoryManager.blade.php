@@ -46,16 +46,13 @@
         $('#changeCategoryInput').val('');
         $('#changeCategoryInput').hide();
         $('#changeCategoryApply').hide();
-
     }
 
     function changeCategory() {
         $('[rel="changeCategory"]').show();
         $('#changeCategoryButton').hide();
         $('#changeCategoryInput').val($('#category option:selected').text())
-
     }
-
     function CategoryChanged(id, name) {
         $('[rel="changeCategory"]').hide();
         $('#changeCategoryButton').show();
@@ -64,11 +61,9 @@
         $('#category').append(new Option(name, id));
         $('#category').val(id).change();
     }
-
     function changeCategoryApply() {
         let category_id = $('#category').val();
         let category_name = $('#changeCategoryInput').val();
-
         $.ajax({
             url: "{{ route('lots.manage_change') }}",
             type: "POST",
@@ -79,7 +74,7 @@
             },
             success: function (response) {
                 if (response?.status == 1) {
-                    CategoryChanged(response?.id, response?.name);
+                    CategoryChanged(response?.data?.id, category_name);
                 }
                 console.log(response);
             },
@@ -93,11 +88,11 @@
             type: "POST",
             data: {
                 "_token": "{{ csrf_token() }}",
-                category_name: category_name
+                name: category_name
             },
             success: function (response) {
                 if (response?.status == 1) {
-                    newCategoryInserted(response?.id, response?.name);
+                    newCategoryInserted(response?.data?.id, category_name);
                 }
                 console.log(response);
             },
@@ -108,7 +103,7 @@
         console.log($('#category').val());
         let category_id = $('#category').val();
         $.ajax({
-            url: "{{ route('lots.manage_delete') }}",
+            url: "{{ route('lots.manage_destroy') }}",
             type: "POST",
             data: {
                 "_token": "{{ csrf_token() }}",
@@ -122,12 +117,10 @@
             },
         });
     }
-
     function newCategory() {
         $('[rel="newCategory"]').show();
         $('#newCategoryButton').hide();
     }
-
     function newCategoryInserted(id, name) {
         $('[rel="newCategory"]').hide();
         $('#newCategoryButton').show();
@@ -135,7 +128,6 @@
         $('#category').append(new Option(name, id));
         $('#category').val(id).change();
     }
-
     $('#ChangeCategoryForm').on('submit', function (event) {
         console.log(this);
         event.preventDefault();

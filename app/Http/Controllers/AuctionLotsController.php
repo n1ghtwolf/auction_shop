@@ -32,20 +32,12 @@ class AuctionLotsController extends Controller
         );
     }
 
-    public function destroy(AuctionLotsRequest $request): \Illuminate\Http\JsonResponse
-    {
+    public function destroy(
+        Request $request,
+        JsonResponseController $jsonResponseController
+    ): \Illuminate\Http\JsonResponse {
         $res = Lots::destroy($request->get('id'));
-        if ($res) {
-            return response()->json([
-                'status' => 1,
-                'msg' => 'success'
-            ]);
-        } else {
-            return response()->json([
-                'status' => 0,
-                'msg' => 'fail'
-            ]);
-        }
+        return $jsonResponseController->handle($res, array());
     }
 
     public function newLot(): View
@@ -53,37 +45,20 @@ class AuctionLotsController extends Controller
         return view('lots.addLot', ['categories' => Category::all()]);
     }
 
-    public function create(Request $request, Lots $lot): \Illuminate\Http\JsonResponse
-    {
-        $lot->fill($request->only('name', 'description', 'category_id'));
-
-        if ($lot->save()) {
-            return response()->json([
-                'status' => 1,
-                'msg' => 'success',
-                'lot_id' => $lot->id
-            ]);
-        }
-
-        return response()->json([
-            'status' => 0,
-            'msg' => 'fail'
-        ]);
+    public function create(
+        AuctionLotsRequest $request,
+        Lots $lot,
+        JsonResponseController $jsonResponseController
+    ): \Illuminate\Http\JsonResponse {
+        $lot->fill($request->validated());
+        return $jsonResponseController->handle($lot->save(), array('id' => $lot->id));
     }
 
-    public function update(Request $request): \Illuminate\Http\JsonResponse
-    {
-        $res = Lots::where('id', $request->lot_id)->update($request->only('name', 'description', 'category_id'));
-        if ($res) {
-            return response()->json([
-                'status' => 1,
-                'msg' => 'success'
-            ]);
-        } else {
-            return response()->json([
-                'status' => 0,
-                'msg' => 'fail'
-            ]);
-        }
+    public function update(
+        AuctionLotsRequest $request,
+        JsonResponseController $jsonResponseController
+    ): \Illuminate\Http\JsonResponse {
+        $res = Lots::where('id', $request->lot_id)->update($request->validated());
+        return $jsonResponseController->handle($res, array());
     }
 }

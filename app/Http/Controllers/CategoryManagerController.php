@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\CategoryManagerRequest;
 use App\Models\Category;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
@@ -13,60 +14,31 @@ class CategoryManagerController extends Controller
         return view('categoryManager', ['categories' => Category::all()]);
     }
 
-    public function create(Request $request): \Illuminate\Http\JsonResponse
-    {
-        $res = Category::create(['name' => $request->category_name]);
-
-        if ($res) {
-            return response()->json([
-                'status' => 1,
-                'msg' => 'success',
-                'id' => $res->id,
-                'name' => $res->name
-            ]);
-        } else {
-            return response()->json([
-                'status' => 0,
-                'msg' => 'fail'
-            ]);
-        }
+    public function create(
+        CategoryManagerRequest $request,
+        Category $category,
+        JsonResponseController $jsonResponseController
+    ): \Illuminate\Http\JsonResponse {
+        $category->fill($request->validated());
+        return $jsonResponseController->handle($category->save(), array('id' => $category->id));
     }
 
-    public function destroy(Request $request): \Illuminate\Http\JsonResponse
-    {
+    public function destroy(
+        Request $request,
+        JsonResponseController $jsonResponseController
+    ): \Illuminate\Http\JsonResponse {
         $res = Category::destroy($request->get('category_id'));
-        if ($res) {
-            return response()->json([
-                'status' => 1,
-                'msg' => 'success'
-            ]);
-        } else {
-            return response()->json([
-                'status' => 0,
-                'msg' => 'fail'
-            ]);
-        }
+        return $jsonResponseController->handle($res, array());
     }
 
-    public function update(Request $request): \Illuminate\Http\JsonResponse
-    {
-        $res = Category::where('id', $request->id)->update($request->only('name'));
-
-        if ($res) {
-            return response()->json([
-                'status' => 1,
-                'msg' => 'success',
-                'id' => $request->id,
-                'name' => $request->name
-
-            ]);
-        } else {
-            return response()->json([
-                'status' => 0,
-                'msg' => 'fail'
-            ]);
-        }
+    public function update(
+        CategoryManagerRequest $request,
+        JsonResponseController $jsonResponseController
+    ): \Illuminate\Http\JsonResponse {
+        $res = Category::where('id', $request->id)->update($request->validated());
+        return $jsonResponseController->handle($res, array(
+            'id' => $request->id,
+            'name' => $request->name
+        ));
     }
-
-
 }
