@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\AuctionLotsRequest;
 use App\Models\Category;
 use App\Models\Lots;
 use Illuminate\Contracts\View\View;
@@ -31,7 +32,7 @@ class AuctionLotsController extends Controller
         );
     }
 
-    public function delete(Request $request): \Illuminate\Http\JsonResponse
+    public function destroy(AuctionLotsRequest $request): \Illuminate\Http\JsonResponse
     {
         $res = Lots::destroy($request->get('id'));
         if ($res) {

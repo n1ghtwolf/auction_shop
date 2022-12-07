@@ -32,7 +32,7 @@ class CategoryManagerController extends Controller
         }
     }
 
-    public function delete(Request $request): \Illuminate\Http\JsonResponse
+    public function destroy(Request $request): \Illuminate\Http\JsonResponse
     {
         $res = Category::destroy($request->get('category_id'));
         if ($res) {
