@@ -64,10 +64,6 @@
 
     }
 
-    function change() {
-
-    }
-
     function makeForm(row, text) {
         row.innerHTML = "<input type=text value=" + text + ">" + text;
     }

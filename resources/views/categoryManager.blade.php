@@ -39,28 +39,9 @@
 <div class="modal-footer">
     <button type="button" class="btn btn-danger" data-dismiss="modal" onclick="hideModal()">закрыть</button>
 </div>
+<script src="js/categoryManage.js"></script>
 <script>
-    function cancelChangeCategory() {
-        $('[rel="changeCategory"]').hide();
-        $('#changeCategoryButton').show();
-        $('#changeCategoryInput').val('');
-        $('#changeCategoryInput').hide();
-        $('#changeCategoryApply').hide();
-    }
 
-    function changeCategory() {
-        $('[rel="changeCategory"]').show();
-        $('#changeCategoryButton').hide();
-        $('#changeCategoryInput').val($('#category option:selected').text())
-    }
-    function CategoryChanged(id, name) {
-        $('[rel="changeCategory"]').hide();
-        $('#changeCategoryButton').show();
-        $('#changeCategoryInput').val('');
-        $("#category option[value=" + id + "]").remove();
-        $('#category').append(new Option(name, id));
-        $('#category').val(id).change();
-    }
     function changeCategoryApply() {
         let category_id = $('#category').val();
         let category_name = $('#changeCategoryInput').val();
@@ -117,17 +98,7 @@
             },
         });
     }
-    function newCategory() {
-        $('[rel="newCategory"]').show();
-        $('#newCategoryButton').hide();
-    }
-    function newCategoryInserted(id, name) {
-        $('[rel="newCategory"]').hide();
-        $('#newCategoryButton').show();
-        $('#newCategoryInput').val('');
-        $('#category').append(new Option(name, id));
-        $('#category').val(id).change();
-    }
+
     $('#ChangeCategoryForm').on('submit', function (event) {
         console.log(this);
         event.preventDefault();
@@ -138,7 +109,6 @@
         let category_id = $('#category').val();
         let category_name = $('#category option:selected').text();
 
-        // console.log(battery);
         $.ajax({
             url: "{{ route('lots.manage_apply') }}",
             type: "POST",
