@@ -46,8 +46,8 @@
         let category_id = $('#category').val();
         let category_name = $('#changeCategoryInput').val();
         $.ajax({
-            url: "{{ route('lots.manage_change') }}",
-            type: "POST",
+            url: "{{ route('category.update') }}",
+            type: "PATCH",
             data: {
                 "_token": "{{ csrf_token() }}",
                 id: category_id,
@@ -65,7 +65,7 @@
     function saveCategory() {
         let category_name = $('#newCategoryInput').val();
         $.ajax({
-            url: "{{ route('lots.manage_new') }}",
+            url: "{{ route('category.create') }}",
             type: "POST",
             data: {
                 "_token": "{{ csrf_token() }}",
@@ -84,8 +84,8 @@
         console.log($('#category').val());
         let category_id = $('#category').val();
         $.ajax({
-            url: "{{ route('lots.manage_destroy') }}",
-            type: "POST",
+            url: "{{ route('category.destroy') }}",
+            type: "DELETE",
             data: {
                 "_token": "{{ csrf_token() }}",
                 category_id: category_id,
@@ -98,36 +98,4 @@
             },
         });
     }
-
-    $('#ChangeCategoryForm').on('submit', function (event) {
-        console.log(this);
-        event.preventDefault();
-
-        let lot_id = $('#lot_id').val();
-        let name = $('#name').val();
-        let description = $('#description').val();
-        let category_id = $('#category').val();
-        let category_name = $('#category option:selected').text();
-
-        $.ajax({
-            url: "{{ route('lots.manage_apply') }}",
-            type: "POST",
-            data: {
-                "_token": "{{ csrf_token() }}",
-                lot_id: lot_id,
-                name: name,
-                description: description,
-                category_id: category_id,
-
-            },
-            success: function (response) {
-                if (response?.status == 1) {
-                    hideModal();
-                    // console.log($('#category option:selected').text());
-                    change_row(lot_id, name, description, category_name)
-                }
-                console.log(response);
-            },
-        });
-    });
 </script>

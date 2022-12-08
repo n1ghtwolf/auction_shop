@@ -52,7 +52,7 @@
         // console.log(battery);
         $.ajax({
             url: "{{ route('lots.update') }}",
-            type: "POST",
+            type: "PATCH",
             data: {
                 "_token": "{{ csrf_token() }}",
                 lot_id: lot_id,

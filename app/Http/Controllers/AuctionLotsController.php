@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Actions\JsonResponseAction;
 use App\Http\Requests\AuctionLotsRequest;
 use App\Models\Category;
 use App\Models\Lots;
 use Illuminate\Contracts\View\View;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 
 class AuctionLotsController extends Controller
@@ -34,10 +36,10 @@ class AuctionLotsController extends Controller
 
     public function destroy(
         Request $request,
-        JsonResponseController $jsonResponseController
-    ): \Illuminate\Http\JsonResponse {
+        JsonResponseAction $jsonResponseAction
+    ): JsonResponse {
         $res = Lots::destroy($request->get('id'));
-        return $jsonResponseController->handle($res, array());
+        return $jsonResponseAction($res, array());
     }
 
     public function newLot(): View
@@ -48,17 +50,17 @@ class AuctionLotsController extends Controller
     public function create(
         AuctionLotsRequest $request,
         Lots $lot,
-        JsonResponseController $jsonResponseController
-    ): \Illuminate\Http\JsonResponse {
+        JsonResponseAction $jsonResponseAction
+    ): JsonResponse {
         $lot->fill($request->validated());
-        return $jsonResponseController->handle($lot->save(), array('id' => $lot->id));
+        return $jsonResponseAction($lot->save(), array('id' => $lot->id));
     }
 
     public function update(
         AuctionLotsRequest $request,
-        JsonResponseController $jsonResponseController
-    ): \Illuminate\Http\JsonResponse {
+        JsonResponseAction $jsonResponseAction
+    ): JsonResponse {
         $res = Lots::where('id', $request->lot_id)->update($request->validated());
-        return $jsonResponseController->handle($res, array());
+        return $jsonResponseAction($res, array());
     }
 }

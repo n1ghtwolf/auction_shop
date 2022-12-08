@@ -22,7 +22,7 @@
         <th>
             Категория
             <button class="btn btn-small" id='ManageCategories'
-                    onclick="showDialog('{{route('lots.manageCategories')}}')">Управление категориями
+                    onclick="showDialog('{{route('category.show')}}')">Управление категориями
             </button>
         </th>
         <th>
@@ -60,7 +60,7 @@
     function deleteRow(lot_id) {
 
         $("[lot_id='" + lot_id + "']").remove();
-        ajax_call("{{ route('lots.destroy') }}", lot_id);
+        ajax_call("{{ route('lots.destroy') }}", lot_id, 'delete');
 
     }
 
@@ -78,7 +78,7 @@
         }
     }
 
-    function ajax_call(url, data) {
+    function ajax_call(url, data, type) {
         console.log(url);
         console.log(data);
         $.ajax({
@@ -87,7 +87,7 @@
             // all of your POST/GET variables
             'data': {id: data},
             // you may change this to GET, if you like...
-            'type': 'post',
+            'type': type,
             // the kind of response that you want from the server
             'beforeSend': function () {
                 // anything you want to have happen before sending the data to the server...
