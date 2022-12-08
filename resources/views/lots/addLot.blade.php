@@ -64,7 +64,7 @@
                 if (response?.status == 1) {
                     hideModal();
                     // console.log($('#category option:selected').text());
-                    change_row(response?.lot_id, name, description, category_name, 'addRow')
+                    change_row(response?.data?.id, name, description, category_name, 'addRow')
                 }
                 console.log(response);
             },
